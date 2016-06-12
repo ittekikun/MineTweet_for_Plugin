@@ -2,6 +2,7 @@ package com.ittekikun.plugin.minetweet;
 
 import com.ittekikun.plugin.itkcore.locale.MessageFileLoader;
 import com.ittekikun.plugin.itkcore.logger.LogFilter;
+import com.ittekikun.plugin.itkcore.utility.VariousUtility;
 import com.ittekikun.plugin.minetweet.api.MineTweetAPI;
 import com.ittekikun.plugin.minetweet.command.BaseCommand;
 import com.ittekikun.plugin.minetweet.command.ConfigReloadCommand;
@@ -16,6 +17,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -28,13 +30,12 @@ public class MineTweet extends JavaPlugin
 	public static PluginManager pluginManager;
 	public static boolean forceDisableMode;
 	public MineTweetConfig mtConfig;
+	public APIKey apiKey;
 	public MessageFileLoader messageLoader;
 	public TwitterManager twitterManager;
 	public BotManager botManager;
 
 	private List<BaseCommand> commands = new ArrayList<BaseCommand>();
-
-	public static boolean isV19;
 
     @Override
     public void onEnable()
@@ -44,6 +45,9 @@ public class MineTweet extends JavaPlugin
 
 	    log = Logger.getLogger("minetweet");
 	    log.setFilter(new LogFilter(prefix));
+
+		mtConfig = new MineTweetConfig(this);
+		mtConfig.loadConfig();
 
 		messageLoader = new MessageFileLoader(instance.getDataFolder(), instance.getPluginJarFile(), "languages", "messages", mtConfig.messageLanguage);
 		messageLoader.saveMessages();
@@ -59,13 +63,9 @@ public class MineTweet extends JavaPlugin
 			return;
 		}
 
-	    mtConfig = new MineTweetConfig(this);
-	    mtConfig.loadConfig();
-
-	    twitterManager = new TwitterManager(this);
+		apiKey = getApiKey();
+		twitterManager = new TwitterManager(this);
 	    twitterManager.startSetup();
-
-
 
 	    botManager = new BotManager(this);
 	    botManager.botSetup();
@@ -78,6 +78,24 @@ public class MineTweet extends JavaPlugin
 		log.info(messageLoader.loadMessage("language.name") + " " + messageLoader.loadMessage("system.load.language"));
 		log.info(messageLoader.loadMessage("system.load.complete"));
     }
+
+	public APIKey getApiKey()
+	{
+		try
+		{
+			APIKey apiKey = (APIKey)VariousUtility.decodeObject(getPluginJarFile(), "yuzu");
+			return apiKey;
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		catch (ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@Override
 	public void onDisable()

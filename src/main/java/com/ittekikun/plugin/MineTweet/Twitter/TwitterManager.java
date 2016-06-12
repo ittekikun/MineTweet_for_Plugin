@@ -2,10 +2,8 @@ package com.ittekikun.plugin.minetweet.twitter;
 
 import com.ittekikun.plugin.itkcore.utility.VariousUtility;
 import com.ittekikun.plugin.minetweet.MineTweetConfig;
-import com.ittekikun.plugin.minetweet.data.ConsumerKey;
 import com.ittekikun.plugin.minetweet.gui.Swing.CertifyGui_Swing;
 import com.ittekikun.plugin.minetweet.MineTweet;
-import com.ittekikun.plugin.minetweet.Utility;
 import twitter4j.*;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
@@ -39,8 +37,8 @@ public class TwitterManager
 		{
 			ConfigurationBuilder builder = new ConfigurationBuilder();
 
-			builder.setOAuthConsumerKey(ConsumerKey.m_ConsumerKey);
-			builder.setOAuthConsumerSecret(ConsumerKey.m_ConsumerSecret);
+			builder.setOAuthConsumerKey(plugin.apiKey.getIdol());
+			builder.setOAuthConsumerSecret(plugin.apiKey.getMaster());
 			Configuration conf = builder.build();
 
 			twitter = new TwitterFactory(conf).getInstance();
@@ -140,6 +138,7 @@ public class TwitterManager
 
 	private void updateStatus(StatusUpdate statusUpdate) throws TwitterException
 	{
+		//// TODO: 2016/05/30
 		if(!status)
 		{
 			MineTweet.log.severe("現在ツイートができない状況の為、下記のツイートは行われませんでした。");
