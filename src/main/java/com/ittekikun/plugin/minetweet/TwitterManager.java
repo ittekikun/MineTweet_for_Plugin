@@ -1,4 +1,4 @@
-package com.test;
+package com.ittekikun.plugin.minetweet;
 
 import com.ittekikun.plugin.itkcore.locale.MessageFileLoader;
 import com.ittekikun.plugin.itkcore.utility.VariousUtility;

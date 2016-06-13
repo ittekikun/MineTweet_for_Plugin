@@ -1,4 +1,4 @@
-package com.test;
+package com.ittekikun.plugin.minetweet;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.test;
+package com.ittekikun.plugin.minetweet;
 
 import twitter4j.TwitterException;
 
