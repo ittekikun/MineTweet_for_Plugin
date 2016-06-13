@@ -1,4 +1,4 @@
-package com.ittekikun.plugin.minetweet;
+package com.test;
 
 import java.io.Serializable;
 

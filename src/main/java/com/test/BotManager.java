@@ -1,4 +1,4 @@
-package com.ittekikun.plugin.minetweet;
+package com.test;
 
 import com.ittekikun.plugin.itkcore.utility.BukkitUtility;
 import com.ittekikun.plugin.itkcore.utility.VariousUtility;
@@ -9,8 +9,6 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitScheduler;
 import twitter4j.TwitterException;
-
-import static com.ittekikun.plugin.minetweet.Keyword.*;
 
 public class BotManager
 {
@@ -78,22 +76,22 @@ public class BotManager
         private String replaceKeywords(String source)
         {
             String result = source;
-            if (result.contains(KEYWORD_NUMBER))
+            if (result.contains(Keyword.KEYWORD_NUMBER))
             {
                 ArrayList players = BukkitUtility.getOnlinePlayers();
                 String number = Integer.toString((players.size()));
 
-                result = result.replace(KEYWORD_NUMBER, number);
+                result = result.replace(Keyword.KEYWORD_NUMBER, number);
             }
-            if (result.contains(KEYWORD_NEWLINE))
+            if (result.contains(Keyword.KEYWORD_NEWLINE))
             {
-                result = result.replace(KEYWORD_NEWLINE, SOURCE_NEWLINE);
+                result = result.replace(Keyword.KEYWORD_NEWLINE, Keyword.SOURCE_NEWLINE);
             }
-            if (result.contains(KEYWORD_TIME))
+            if (result.contains(Keyword.KEYWORD_TIME))
             {
                 String time = VariousUtility.timeGetter(mineTweetConfig.dateformat);
 
-                result = result.replace(KEYWORD_TIME, time);
+                result = result.replace(Keyword.KEYWORD_TIME, time);
             }
             return result;
         }

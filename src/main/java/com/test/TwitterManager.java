@@ -1,9 +1,7 @@
-package com.ittekikun.plugin.minetweet;
+package com.test;
 
 import com.ittekikun.plugin.itkcore.locale.MessageFileLoader;
 import com.ittekikun.plugin.itkcore.utility.VariousUtility;
-import com.ittekikun.plugin.minetweet.APIKey;
-import com.ittekikun.plugin.minetweet.MineTweet;
 import twitter4j.*;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
