@@ -1,7 +1,5 @@
-package com.ittekikun.plugin.minetweet;
+package com.ittekikun.plugin.minetweet.temp;
 
-import com.ittekikun.plugin.itkcore.utility.BukkitUtility;
-import com.ittekikun.plugin.itkcore.utility.VariousUtility;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,28 +10,25 @@ import twitter4j.TwitterException;
 
 public class BotManager
 {
-    public MineTweet mineTweet;
-    public TwitterManager twitterManager;
-    public MineTweetConfig mineTweetConfig;
-    public List<String> botMessageList;
-    public BukkitScheduler bukkitScheduler;
+    private MineTweet mineTweet;
+    private TwitterManager twitterManager;
+    private MineTweetConfig mineTweetConfig;
+    private List<String> botMessageList;
+    private BukkitScheduler bukkitScheduler;
 
     public BotManager(MineTweet mineTweet)
     {
         this.mineTweet = mineTweet;
-        this.mineTweetConfig = mineTweet.mineTweetConfig;
+        this.mineTweetConfig = mineTweet.mtConfig;
         this.twitterManager = mineTweet.twitterManager;
     }
 
     public void botSetup()
     {
-        if (this.mineTweetConfig.useBot)
-        {
-            this.bukkitScheduler = Bukkit.getServer().getScheduler();
+        this.bukkitScheduler = Bukkit.getServer().getScheduler();
 
-            this.botMessageList = new ArrayList(this.mineTweetConfig.botMessageList);
-            this.bukkitScheduler.runTaskTimer(this.mineTweet, new BotTweetTask(this.botMessageList), 0L, convertSecondToTick(this.mineTweetConfig.tweetCycle));
-        }
+        this.botMessageList = new ArrayList(this.mineTweetConfig.botMessageList);
+        this.bukkitScheduler.runTaskTimer(this.mineTweet, new BotTweetTask(this.botMessageList), 0L, convertSecondToTick(this.mineTweetConfig.tweetCycle));
     }
 
     public void taskCancel()
@@ -44,7 +39,6 @@ public class BotManager
         }
     }
 
-    //簡単だけど分かりやすくするために
     public int convertSecondToTick(int second)
     {
         return second * 20;

@@ -1,56 +1,52 @@
-package com.ittekikun.plugin.minetweet;
+package com.ittekikun.plugin.minetweet.temp;
 
-import com.ittekikun.plugin.itkcore.locale.MessageFileLoader;
-import com.ittekikun.plugin.itkcore.utility.VariousUtility;
 import twitter4j.*;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import java.io.*;
 import java.net.URL;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class TwitterManager
 {
     private MineTweet mineTweet;
-    private MineTweetConfig mineTweetConfig;
-    private MessageFileLoader messageFileLoader;
-    private Twitter twitter;
-    private TwitterStream eewStream;
+    private MineTweetConfig mtConfig;
+    public Twitter twitter;
     private RequestToken requestToken;
     private APIKey apiKey;
     private Logger logger;
 
-    private boolean canTweet = false;
-    private boolean canAuth = false;
-
-    //private boolean streamStatus = false;
+    public boolean canTweet = false;
+    public boolean canAuth = false;
 
     public TwitterManager(MineTweet mineTweet, APIKey apiKey)
     {
         this.mineTweet = mineTweet;
         this.apiKey = apiKey;
-        this.logger = mineTweet.getMineTweetLogger();
-        this.messageFileLoader = mineTweet.messageFileLoader;
+        this.logger = MineTweet.mtLogger;
     }
 
     public void startSetup()
     {
         ConfigurationBuilder builder = new ConfigurationBuilder();
 
-        builder.setOAuthConsumerKey(apiKey.getIdol());
-        builder.setOAuthConsumerSecret(apiKey.getMaster());
+        builder.setOAuthConsumerKey(apiKey.getAnya());
+        builder.setOAuthConsumerSecret(apiKey.getMiku());
         Configuration conf = builder.build();
 
-        AccessToken accessToken = null;
-
         twitter = new TwitterFactory(conf).getInstance();
-        eewStream = new TwitterStreamFactory(conf).getInstance();
 
-        accessToken = loadAccessToken();
+        AccessToken accessToken = loadAccessToken();
 
         //初期起動時(ファイルなし)
         if(accessToken == null)
@@ -61,9 +57,6 @@ public class TwitterManager
         else
         {
             twitter.setOAuthAccessToken(accessToken);
-            eewStream.setOAuthAccessToken(accessToken);
-
-            //startRecieveStream();
 
             canTweet = true;
         }
@@ -88,9 +81,9 @@ public class TwitterManager
     {
         StatusUpdate statusUpdate;
 
-        if(mineTweetConfig.addDate)
+        if(mtConfig.addDate)
         {
-            String time = VariousUtility.timeGetter(mineTweetConfig.dateformat);
+            String time = VariousUtility.timeGetter(mtConfig.dateformat);
             statusUpdate = new StatusUpdate(tweet + "\n" + time);
         }
         else
@@ -113,13 +106,13 @@ public class TwitterManager
     {
         if(!canTweet)
         {
-            logger.severe(messageFileLoader.loadMessage("error.canttweet"));
+            logger.severe("現在ツイートできる状態でない為、下記ツイートは行われませんでした。");
             logger.severe(statusUpdate.getStatus());
             return;
         }
         if(!checkCharacters(statusUpdate.getStatus()))
         {
-            logger.severe(messageFileLoader.loadMessage("error.文字数"));
+            logger.severe("文字数制限をオーバーしている為、下記ツイートは行われませんでした。");
             logger.severe(statusUpdate.getStatus());
             return;
         }
@@ -144,52 +137,60 @@ public class TwitterManager
         return url;
     }
 
-    protected AccessToken loadAccessToken()
+
+
+    public AccessToken getAccessToken(String pin) throws TwitterException
     {
-        File f = createAccessTokenFileName();
-
-        ObjectInputStream is = null;
-        try
-        {
-            is = new ObjectInputStream(new FileInputStream(f));
-            AccessToken accessToken = (AccessToken)is.readObject();
-            return accessToken;
-        }
-        catch (IOException e)
-        {
-            return null;
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            return null;
-        }
-        finally
-        {
-            if(is != null)
-            {
-                try
-                {
-                    is.close();
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    protected AccessToken getAccessToken(String pin) throws TwitterException
-    {
-        AccessToken accessToken = null;
-
-        accessToken = twitter.getOAuthAccessToken(requestToken, pin);
+        AccessToken accessToken =  twitter.getOAuthAccessToken(requestToken, pin);
 
         return accessToken;
     }
 
-    protected void storeAccessToken(AccessToken accessToken)
+    public AccessToken loadAccessToken()
+    {
+        File f = createAccessTokenFileName();
+
+        if(!f.exists())
+        {
+            return null;
+        }
+
+        try
+        {
+            return (AccessToken)VariousUtility.encryptionDecodeObject(f, "xiHEW7YShBpcruPy");
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ClassNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IllegalBlockSizeException e)
+        {
+            e.printStackTrace();
+        }
+        catch (NoSuchPaddingException e)
+        {
+            e.printStackTrace();
+        }
+        catch (BadPaddingException e)
+        {
+            e.printStackTrace();
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+        catch (InvalidKeyException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void storeAccessToken(AccessToken accessToken)
     {
         //ファイル名の生成
         File f = createAccessTokenFileName();
@@ -201,51 +202,58 @@ public class TwitterManager
             d.mkdirs();
         }
 
-        //ファイルへの書き込み
-        ObjectOutputStream os = null;
         try
         {
-            os = new ObjectOutputStream(new FileOutputStream(f));
-            os.writeObject(accessToken);
+            VariousUtility.encryptionEncodeObject(f, accessToken, "xiHEW7YShBpcruPy");
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
-        finally
+        catch (ClassNotFoundException e)
         {
-            if (os != null)
-            {
-                try
-                {
-                    os.close();
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-            }
+            e.printStackTrace();
+        }
+        catch (IllegalBlockSizeException e)
+        {
+            e.printStackTrace();
+        }
+        catch (NoSuchPaddingException e)
+        {
+            e.printStackTrace();
+        }
+        catch (BadPaddingException e)
+        {
+            e.printStackTrace();
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+        catch (InvalidKeyException e)
+        {
+            e.printStackTrace();
         }
     }
 
     private File createAccessTokenFileName()
     {
-        String s = mineTweet.getDataFolder() + "/AccessToken.dat";
+        String s = mineTweet.getDataFolder() + "/AccessToken.mtdf";
         return new File(s);
     }
 
     protected void startSetupGuide()
     {
-        java.util.List<String> firstMes = new ArrayList<String>();
+        List<String> firstMes = new ArrayList<String>();
 
         firstMes.add("#################################################");
         firstMes.add("[[[[ Twitter連携ウィザード MineTweet by ittekikun ]]]]");
         firstMes.add("MineTweetのTwitter連携設定がされてません。");
-        firstMes.add("下記URLから認証後、PINコードを /eew pin <pin> の様に打ち込み連携を完了して下さい。");
+        firstMes.add("下記URLから認証後、PINコードを /minetweet pin <pin> の様に打ち込み連携を完了して下さい。");
         //firstMes.add("※");
         try
         {
-            firstMes.add("URL: " + VariousUtility.getShortUrl(createOAuthUrl().toString(), apiKey.getLove()));
+            firstMes.add("URL: " + VariousUtility.getShortUrl(createOAuthUrl().toString(), apiKey.getAsuka()));
             //firstMes.add("URL: " + (createOAuthUrl().toString()));
         }
         catch (IOException e)
@@ -256,41 +264,15 @@ public class TwitterManager
         }
         firstMes.add("#################################################");
 
-        infoList(firstMes);
+        infoFromList(firstMes);
         canAuth = true;
     }
 
-    private void infoList(java.util.List<String> list)
+    private void infoFromList(java.util.List<String> list)
     {
         for(int i = 0; i < list.size(); ++i)
         {
             logger.info(list.get(i).toString());
         }
     }
-
-//    public void startRecieveStream()
-//    {
-//        eewStream.addListener(new EEWStream(eewAlert));
-//        eewStream.user();
-//
-//        streamStatus = true;
-//
-//        EEWAlert.log.info("ユーザーストリームに接続します。");
-//
-//        //214358709 = @eewbot
-//        long[] list = {214358709L};
-//        FilterQuery query = new FilterQuery(list);
-//        eewStream.filter(query);
-//    }
-//
-//    public void shutdownRecieveStream()
-//    {
-//        if(streamStatus)
-//        {
-//            eewStream.shutdown();
-//            EEWAlert.log.info("ユーザーストリームから切断しました。");
-//
-//            streamStatus = false;
-//        }
-//    }
 }

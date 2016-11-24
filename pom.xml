@@ -29,7 +29,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.9-R0.1-SNAPSHOT</version>
+            <version>1.11-R0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
@@ -71,11 +71,14 @@
             <scope>system</scope>
         </dependency>
         <dependency>
-            <groupId>com.ittekikun.plugin</groupId>
-            <artifactId>ITKCore</artifactId>
-            <version>1.00</version>
-            <systemPath>${basedir}/lib/ITKCore.jar</systemPath>
-            <scope>system</scope>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.7.3</version>
         </dependency>
     </dependencies>
 

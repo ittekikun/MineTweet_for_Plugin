@@ -1,10 +1,9 @@
 name: MineTweet_for_Plugin
-main: com.ittekikun.plugin.minetweet.MineTweet
+main: com.ittekikun.plugin.minetweet.temp.MineTweet
 version: 1.48
 description: twitter on BUKKIT Server.
 authors: [ittekikun]
 website: http://forum.minecraftuser.jp/viewtopic.php?f=38&t=12469
-depend: [ITKCore]
 softdepend: [LunaChat, MCBans, Votifier]
 
 commands:

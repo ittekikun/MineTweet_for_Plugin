@@ -1,6 +1,4 @@
-package com.ittekikun.plugin.minetweet;
-
-import com.ittekikun.plugin.itkcore.config.ConfigAccessor;
+package com.ittekikun.plugin.minetweet.temp;
 
 import java.util.List;
 
@@ -27,46 +25,49 @@ public class MineTweetConfig
     protected String accessTokenSecret;
 
     //twitter
-    protected Boolean addDate;
-    protected String dateformat;
+    public Boolean addDate;
+    public String dateformat;
 
-    protected String cmd_message_temp;
+    public String cmd_message_temp;
 
-    protected Boolean serverStartTweet;
-    protected Boolean serverStopTweet;
-    protected String start_message_temp;
-    protected String stop_message_temp;
+    public Boolean serverStartTweet;
+    public Boolean serverStopTweet;
+    public String start_message_temp;
+    public String stop_message_temp;
 
-    protected Boolean playerJoinTweet;
-    protected Boolean playerQuitTweet;
-    protected String join_message_temp;
-    protected String quit_message_temp;
-    protected Boolean tweetWithImage;
+    public Boolean playerJoinTweet;
+    public Boolean playerQuitTweet;
+    public String join_message_temp;
+    public String quit_message_temp;
+    public Boolean tweetWithImage;
 
-    protected Boolean achievementAwardedTweet;
-    protected String achievement_message_temp;
+    public Boolean achievementAwardedTweet;
+    public String achievement_message_temp;
     //public String achievement_message_name;
 
-    protected Boolean playerDeathTweet;
-    protected Boolean playerDeathByPlayerTweet;
-    protected String player_death_by_player_message_temp;
+    public Boolean playerDeathTweet;
+    public Boolean playerDeathByPlayerTweet;
+    public String player_death_by_player_message_temp;
 
-    protected int mcBansBanTweet;
-    protected Boolean mcBansKickTweet;
-    protected String kick_message_temp;
-    protected String ban_message_temp;
+    public int mcBansBanTweet;
+    public Boolean mcBansKickTweet;
+    public String bantype_gban;
+    public String bantype_lban;
 
-    protected Boolean votifierReceiveTweet;
-    protected String votifier_message_temp;
+    public String kick_message_temp;
+    public String ban_message_temp;
 
-    protected Boolean lunaChatTweet;
-    protected String channel_create_message_temp;
-    protected String channel_delete_message_temp;
+    public Boolean votifierReceiveTweet;
+    public String votifier_message_temp;
+
+    public Boolean lunaChatTweet;
+    public String channel_create_message_temp;
+    public String channel_delete_message_temp;
 
     //BOT
-    protected Boolean useBot;
-    protected List<String> botMessageList;
-    protected int tweetCycle;
+    public Boolean useBot;
+    public List<String> botMessageList;
+    public int tweetCycle;
 
     public MineTweetConfig(MineTweet mineTweet)
     {
@@ -123,7 +124,10 @@ public class MineTweetConfig
         this.player_death_by_player_message_temp = twitter.getConfig().getString("PlayerDeathByPlayerTemplate", "$deaderさんが$killerさんによってキルされました。(武器: $item)");
 
         this.mcBansBanTweet = twitter.getConfig().getInt("MCBansBANTweet", 0);
-        this.ban_message_temp = twitter.getConfig().getString("BanMessageTemplate", "$userさんが、「$reason」という理由で、$senderによって$bantypeBANされました。【自動投稿】");
+        this.ban_message_temp = twitter.getConfig().getString("BanMessageTemplate", "$userさんが、「$reason」という理由で、$senderによって$bantypeされました。【自動投稿】");
+        this.bantype_gban = twitter.getConfig().getString("GlobalBAN", "クローバルBAN");
+        this.bantype_lban = twitter.getConfig().getString("LocalBAN", "ローカルBAN");
+
         this.mcBansKickTweet = twitter.getConfig().getBoolean("MCBansKICKTweet", false);
         this.kick_message_temp = twitter.getConfig().getString("KickMessageTemplate", "$userさんが、「$reason」という理由で、$senderによってKICKされました。【自動投稿】");
 
