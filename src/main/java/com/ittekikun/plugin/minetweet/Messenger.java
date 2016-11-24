@@ -1,12 +1,12 @@
-package com.ittekikun.plugin.minetweet.temp;
+package com.ittekikun.plugin.minetweet;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static com.ittekikun.plugin.minetweet.temp.Messenger.MessageType.INFO;
-import static com.ittekikun.plugin.minetweet.temp.Messenger.MessageType.SEVERE;
-import static com.ittekikun.plugin.minetweet.temp.Messenger.MessageType.WARNING;
+import static com.ittekikun.plugin.minetweet.Messenger.MessageType.INFO;
+import static com.ittekikun.plugin.minetweet.Messenger.MessageType.SEVERE;
+import static com.ittekikun.plugin.minetweet.Messenger.MessageType.WARNING;
 
 public class Messenger
 {

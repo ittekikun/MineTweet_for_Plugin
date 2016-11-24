@@ -1,8 +1,8 @@
-package com.ittekikun.plugin.minetweet.temp.listeners;
-import com.ittekikun.plugin.minetweet.temp.Messenger;
-import com.ittekikun.plugin.minetweet.temp.MineTweet;
-import com.ittekikun.plugin.minetweet.temp.MineTweetConfig;
-import com.ittekikun.plugin.minetweet.temp.VariousUtility;
+package com.ittekikun.plugin.minetweet.listeners;
+import com.ittekikun.plugin.minetweet.Messenger;
+import com.ittekikun.plugin.minetweet.MineTweet;
+import com.ittekikun.plugin.minetweet.MineTweetConfig;
+import com.ittekikun.plugin.minetweet.VariousUtility;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

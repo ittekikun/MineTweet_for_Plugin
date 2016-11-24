@@ -1,4 +1,4 @@
-package com.ittekikun.plugin.minetweet.temp;
+package com.ittekikun.plugin.minetweet;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

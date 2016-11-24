@@ -1,4 +1,4 @@
-package com.ittekikun.plugin.minetweet.temp;
+package com.ittekikun.plugin.minetweet;
 
 import twitter4j.*;
 import twitter4j.auth.AccessToken;

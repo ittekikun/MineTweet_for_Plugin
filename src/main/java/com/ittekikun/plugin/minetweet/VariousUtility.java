@@ -1,4 +1,4 @@
-package com.ittekikun.plugin.minetweet.temp;
+package com.ittekikun.plugin.minetweet;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;

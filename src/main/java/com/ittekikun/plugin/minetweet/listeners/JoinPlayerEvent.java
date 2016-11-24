@@ -1,23 +1,24 @@
-package com.ittekikun.plugin.minetweet.temp.listeners;
+package com.ittekikun.plugin.minetweet.listeners;
 
+import com.ittekikun.plugin.minetweet.*;
 import com.ittekikun.plugin.minetweet.temp.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import twitter4j.TwitterException;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class QuitPlayerEvent implements Listener
+public class JoinPlayerEvent implements Listener
 {
 	MineTweet plugin;
 	MineTweetConfig mtConfig;
 	TwitterManager twitterManager;
 
-	public QuitPlayerEvent(MineTweet plugin)
+	public JoinPlayerEvent(MineTweet plugin)
 	{
 		this.plugin = plugin;
 		this.mtConfig = plugin.mtConfig;
@@ -25,22 +26,21 @@ public class QuitPlayerEvent implements Listener
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
-	public void onQuitPlayer(final PlayerQuitEvent event) throws TwitterException
+	public void onJoinPlayer(final PlayerJoinEvent event) throws TwitterException
 	{
 		if (!mtConfig.tweetWithImage)
 		{
 			ArrayList players = BukkitUtility.getOnlinePlayers();
 			String number = Integer.toString((players.size()));
 
-			String Message = replaceKeywords(mtConfig.quit_message_temp, event.getPlayer().getName(), number, event.getPlayer().getUniqueId().toString());
+			String Message = replaceKeywords(mtConfig.join_message_temp, event.getPlayer().getName(), number, event.getPlayer().getUniqueId().toString());
 
 			twitterManager.tweet(Message);
 		}
 		else
 		{
 			ArrayList players = BukkitUtility.getOnlinePlayers();
-			final String number = Integer.toString((players.size() - 1));
-
+			final String number = Integer.toString((players.size()));
 			//画像生成でラグが起きるので別スレッド
 			plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable()
 			{
@@ -52,9 +52,9 @@ public class QuitPlayerEvent implements Listener
 						String uuid = UUID.randomUUID().toString();
 						File tweetImage = new File(plugin.getDataFolder(), uuid + ".png");
 
-						VariousUtility.generationPlayerImage(event.getPlayer().getName(), "LEFT THE GAME!", tweetImage);
+						VariousUtility.generationPlayerImage(event.getPlayer().getName(), "JOIN THE GAME!", tweetImage);
 
-						String message = replaceKeywords(mtConfig.quit_message_temp, event.getPlayer().getName(), number, event.getPlayer().getUniqueId().toString());
+						String message = replaceKeywords(mtConfig.join_message_temp, event.getPlayer().getName(), number, event.getPlayer().getUniqueId().toString());
 						twitterManager.tweet(message, tweetImage);
 						tweetImage.delete();
 					}

@@ -1,4 +1,4 @@
-package com.ittekikun.plugin.minetweet.temp;
+package com.ittekikun.plugin.minetweet;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,5 +1,6 @@
-package com.ittekikun.plugin.minetweet.temp.listeners;
+package com.ittekikun.plugin.minetweet.listeners;
 
+import com.ittekikun.plugin.minetweet.*;
 import com.ittekikun.plugin.minetweet.temp.*;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.model.VotifierEvent;

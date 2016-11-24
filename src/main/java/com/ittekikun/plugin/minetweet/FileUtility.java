@@ -1,4 +1,4 @@
-package com.ittekikun.plugin.minetweet.temp;
+package com.ittekikun.plugin.minetweet;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.Enumeration;

@@ -1,6 +1,6 @@
-package com.ittekikun.plugin.minetweet.temp;
+package com.ittekikun.plugin.minetweet;
 
-import com.ittekikun.plugin.minetweet.temp.listeners.VersionCheckListener;
+import com.ittekikun.plugin.minetweet.listeners.VersionCheckListener;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
