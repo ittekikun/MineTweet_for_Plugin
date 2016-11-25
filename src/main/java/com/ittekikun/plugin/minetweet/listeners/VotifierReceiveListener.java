@@ -1,7 +1,6 @@
 package com.ittekikun.plugin.minetweet.listeners;
 
 import com.ittekikun.plugin.minetweet.*;
-import com.ittekikun.plugin.minetweet.temp.*;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.model.VotifierEvent;
 import org.bukkit.event.EventHandler;
@@ -9,13 +8,13 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import twitter4j.TwitterException;
 
-public class VotifierReceiveEvent implements Listener
+public class VotifierReceiveListener implements Listener
 {
 	MineTweet plugin;
 	MineTweetConfig mtConfig;
 	TwitterManager twitterManager;
 
-	public  VotifierReceiveEvent(MineTweet plugin)
+	public VotifierReceiveListener(MineTweet plugin)
 	{
 		this.plugin = plugin;
 		this.mtConfig = plugin.mtConfig;
@@ -23,7 +22,7 @@ public class VotifierReceiveEvent implements Listener
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
-	public void onVotifierEvent(VotifierEvent event) throws TwitterException
+	public void onVotifier(VotifierEvent event) throws TwitterException
 	{
 		Vote vote = event.getVote();
 

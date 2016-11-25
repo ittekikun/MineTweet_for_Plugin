@@ -1,6 +1,6 @@
 package com.ittekikun.plugin.minetweet;
 
-import com.ittekikun.plugin.minetweet.listeners.VersionCheckListener;
+import com.ittekikun.plugin.minetweet.listeners.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -93,20 +93,20 @@ public class MineTweet extends JavaPlugin
 		//ログイン
 		if (mtConfig.playerJoinTweet)
 		{
-			pluginManager.registerEvents(new JoinPlayerEvent(instance), instance);
+			pluginManager.registerEvents(new JoinPlayerListener(instance), instance);
 			mtLogger.info( "ログイン時ツイートが有効になりました。");
 		}
 
 		//ログアウト
 		if (mtConfig.playerQuitTweet)
 		{
-			pluginManager.registerEvents(new QuitPlayerEvent(instance), instance);
+			pluginManager.registerEvents(new QuitPlayerListener(instance), instance);
 			mtLogger.info( "ログアウト時ツイートが有効になりました。");
 		}
 
 		if (mtConfig.achievementAwardedTweet)
 		{
-			pluginManager.registerEvents(new AchievementAwardedEvent(instance), instance);
+			pluginManager.registerEvents(new AchievementAwardedListener(instance), instance);
 			mtLogger.info( "実績取得時ツイートが有効になりました。");
 		}
 
@@ -117,7 +117,7 @@ public class MineTweet extends JavaPlugin
 			{
 				if (pluginManager.isPluginEnabled("MCBans") )
 				{
-					pluginManager.registerEvents(new MCBansBANEvent(instance), instance);
+					pluginManager.registerEvents(new MCBansBANListener(instance), instance);
 					mtLogger.info("MCBansと連携しました。(BAN)");
 				}
 				else
@@ -136,7 +136,7 @@ public class MineTweet extends JavaPlugin
 		{
 			if (pluginManager.isPluginEnabled("MCBans") )
 			{
-				pluginManager.registerEvents(new MCBansKICKEvent(instance), instance);
+				pluginManager.registerEvents(new MCBansKICKListener(instance), instance);
 				mtLogger.info( "MCBansと連携しました。(KICK)");
 			}
 			else
@@ -149,7 +149,7 @@ public class MineTweet extends JavaPlugin
 		{
 			if (pluginManager.isPluginEnabled("Votifier"))
 			{
-				pluginManager.registerEvents(new VotifierReceiveEvent(instance), instance);
+				pluginManager.registerEvents(new VotifierReceiveListener(instance), instance);
 				mtLogger.info( "Votifierと連携しました。");
 			}
 			else

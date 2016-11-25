@@ -23,7 +23,7 @@ public class VersionCheckListener implements Listener
     }
 
     @EventHandler
-    public void onPlayerJoinEvent(PlayerJoinEvent event)
+    public void onPlayerJoin(PlayerJoinEvent event)
     {
         Player player = event.getPlayer();
         if(player.isOp() || player.hasPermission("minetweet.vcheck"))

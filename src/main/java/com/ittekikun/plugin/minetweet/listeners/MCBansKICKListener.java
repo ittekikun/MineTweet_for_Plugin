@@ -1,20 +1,19 @@
 package com.ittekikun.plugin.minetweet.listeners;
 
 import com.ittekikun.plugin.minetweet.*;
-import com.ittekikun.plugin.minetweet.temp.*;
 import com.mcbans.firestar.mcbans.events.PlayerKickEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import twitter4j.TwitterException;
 
-public class MCBansKICKEvent implements Listener
+public class MCBansKICKListener implements Listener
 {
 	MineTweet plugin;
 	MineTweetConfig mtConfig;
 	TwitterManager twittermanager;
 
-	public MCBansKICKEvent(MineTweet plugin)
+	public MCBansKICKListener(MineTweet plugin)
 	{
 		this.plugin = plugin;
 		this.mtConfig = plugin.mtConfig;

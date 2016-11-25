@@ -1,20 +1,19 @@
 package com.ittekikun.plugin.minetweet.listeners;
 
 import com.ittekikun.plugin.minetweet.*;
-import com.ittekikun.plugin.minetweet.temp.*;
 import com.mcbans.firestar.mcbans.events.PlayerBanEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import twitter4j.TwitterException;
 
-public class MCBansBANEvent implements Listener
+public class MCBansBANListener implements Listener
 {
 	MineTweet plugin;
 	MineTweetConfig mtConfig;
 	TwitterManager twittermanager;
 
-	public MCBansBANEvent(MineTweet plugin)
+	public MCBansBANListener(MineTweet plugin)
 	{
 		this.plugin = plugin;
 		this.mtConfig = plugin.mtConfig;
@@ -22,7 +21,7 @@ public class MCBansBANEvent implements Listener
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerBanned(PlayerBanEvent event) throws TwitterException
+    public void onPlayerBan(PlayerBanEvent event) throws TwitterException
     {
     	if(event.isCancelled())
     		return;

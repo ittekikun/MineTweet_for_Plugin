@@ -1,7 +1,6 @@
 package com.ittekikun.plugin.minetweet.listeners;
 
 import com.ittekikun.plugin.minetweet.*;
-import com.ittekikun.plugin.minetweet.temp.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -12,13 +11,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class QuitPlayerEvent implements Listener
+public class QuitPlayerListener implements Listener
 {
 	MineTweet plugin;
 	MineTweetConfig mtConfig;
 	TwitterManager twitterManager;
 
-	public QuitPlayerEvent(MineTweet plugin)
+	public QuitPlayerListener(MineTweet plugin)
 	{
 		this.plugin = plugin;
 		this.mtConfig = plugin.mtConfig;
