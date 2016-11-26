@@ -1,7 +1,7 @@
 name: MineTweet_for_Plugin
 main: MineTweet
 version: 1.48
-description: twitter on BUKKIT Server.
+description: Twitter on your Server.
 authors: [ittekikun]
 website: http://forum.minecraftuser.jp/viewtopic.php?f=38&t=12469
 softdepend: [LunaChat, MCBans, Votifier]
@@ -12,7 +12,7 @@ commands:
       usage: "Usage: /minetweet [args]"
    Mt:
       description: This is a minetweet command.
-      usage: "Usage: /Mt [args]"
+      usage: "Usage: /mt [args]"
       
 permissions:
   MineTweet.*:
