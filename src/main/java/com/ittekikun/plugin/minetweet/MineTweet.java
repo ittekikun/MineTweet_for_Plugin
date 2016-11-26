@@ -35,7 +35,7 @@ public class MineTweet extends JavaPlugin
 	public BotManager botManager;
 
 	protected static final String prefix = "[MineTweet] ";
-	
+
 
 	@Override
 	public void onEnable()
