@@ -39,7 +39,7 @@ public class TwitterManager
 
     public void startSetup()
     {
-        if(mtConfig.usemykey)
+        if(!mtConfig.usemykey)
         {
             ConfigurationBuilder builder = new ConfigurationBuilder();
 
