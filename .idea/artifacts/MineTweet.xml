@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="MineTweet">
+    <output-path>K:/test/plugins</output-path>
+    <root id="archive" name="MineTweet.jar">
+      <element id="module-output" name="MineTweet" />
+      <element id="dir-copy" path="D:/in" />
+    </root>
+  </artifact>
+</component>
