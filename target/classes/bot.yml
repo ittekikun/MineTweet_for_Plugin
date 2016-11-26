@@ -1,0 +1,16 @@
+# MineTweet_for_Plugin
+# @author     ittekikun
+# @license    LGPLv3 ※Twitter4JはApache License 2.0で配布されています。
+# @copyright  Copyright ittekikun 2013-2016
+#
+#UseBot: BOT機能を使用するか ※BETA機能
+#BotMessageList:
+#  - ここにBOTでツイートしたいメッセージを指定します※115字以上はMineTweetの仕様でツイートできません。
+#  - 多分いくつでも書けます↓見本
+#  - 【BOT】鯖管は電ちゃんが好きです！
+#TweetCycle: 上記で指定したメッセージを何秒間隔でツイートするかを設定できます（Twitterの制限もあるので2時間間隔以上をおすすめします）7200秒→2時間
+
+UseBot: false
+BotMessageList:
+  - $number人です。$line$timeです
+TweetCycle: 7200
