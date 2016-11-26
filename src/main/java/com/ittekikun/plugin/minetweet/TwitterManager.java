@@ -39,25 +39,41 @@ public class TwitterManager
 
     public void startSetup()
     {
-        ConfigurationBuilder builder = new ConfigurationBuilder();
-
-        builder.setOAuthConsumerKey(apiKey.getAnya());
-        builder.setOAuthConsumerSecret(apiKey.getMiku());
-        Configuration conf = builder.build();
-
-        twitter = new TwitterFactory(conf).getInstance();
-
-        AccessToken accessToken = loadAccessToken();
-
-        //初期起動時(ファイルなし)
-        if(accessToken == null)
+        if(mtConfig.usemykey)
         {
-            startSetupGuide();
+            ConfigurationBuilder builder = new ConfigurationBuilder();
+
+            builder.setOAuthConsumerKey(apiKey.getAnya());
+            builder.setOAuthConsumerSecret(apiKey.getMiku());
+            Configuration conf = builder.build();
+
+            twitter = new TwitterFactory(conf).getInstance();
+
+            AccessToken accessToken = loadAccessToken();
+
+            //初期起動時(ファイルなし)
+            if(accessToken == null)
+            {
+                startSetupGuide();
+            }
+            //ファイル有り
+            else
+            {
+                twitter.setOAuthAccessToken(accessToken);
+
+                canTweet = true;
+            }
         }
-        //ファイル有り
         else
         {
-            twitter.setOAuthAccessToken(accessToken);
+            ConfigurationBuilder builder = new ConfigurationBuilder();
+            builder.setOAuthConsumerKey(mtConfig.consumerKey);
+            builder.setOAuthConsumerSecret(mtConfig.consumerSecret);
+            builder.setOAuthAccessToken(mtConfig.accessToken);
+            builder.setOAuthAccessTokenSecret(mtConfig.accessTokenSecret);
+            Configuration conf = builder.build();
+
+            twitter = new TwitterFactory(conf).getInstance();
 
             canTweet = true;
         }

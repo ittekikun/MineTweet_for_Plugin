@@ -17,7 +17,7 @@ public class MineTweetConfig
 
     protected Boolean versionCheck;
 
-    protected Boolean GUICertify;
+    protected Boolean usemykey;
 
     protected String consumerKey;
     protected String consumerSecret;
@@ -91,7 +91,7 @@ public class MineTweetConfig
         //system
         this.messageLanguage = system.getConfig().getString("Language", "ja");
 
-        this.GUICertify = system.getConfig().getBoolean("GUICertify", true);
+        this.usemykey = system.getConfig().getBoolean("UseMyConsumerKey", false);
         this.consumerKey = system.getConfig().getString("consumerKey", "xxxxxxxxxx");
         this.consumerSecret = system.getConfig().getString("consumerSecret", "xxxxxxxxxx");
         this.accessToken = system.getConfig().getString("accessToken", "xxxxxxxxxx");
