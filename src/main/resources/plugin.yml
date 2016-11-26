@@ -1,5 +1,5 @@
 name: MineTweet_for_Plugin
-main: MineTweet
+main: com.ittekikun.plugin.minetweet.MineTweet
 version: 1.48
 description: Twitter on your Server.
 authors: [ittekikun]

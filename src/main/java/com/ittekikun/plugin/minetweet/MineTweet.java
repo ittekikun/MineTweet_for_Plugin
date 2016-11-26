@@ -1,6 +1,7 @@
 package com.ittekikun.plugin.minetweet;
 
 import com.ittekikun.plugin.minetweet.listeners.*;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -23,6 +24,8 @@ import java.util.logging.Filter;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
+import static com.ittekikun.plugin.minetweet.Keyword.*;
+
 public class MineTweet extends JavaPlugin
 {
 	private static MineTweet instance;
@@ -41,6 +44,7 @@ public class MineTweet extends JavaPlugin
 	public void onEnable()
 	{
 		instance = this;
+		pluginManager = instance.getServer().getPluginManager();
 
 		settingLogger();
 		if(!(Double.parseDouble(System.getProperty("java.specification.version")) >= 1.7))
@@ -54,10 +58,11 @@ public class MineTweet extends JavaPlugin
 			return;
 		}
 		settingConfig();
-		registerListeners();
-		settingBot();
 		APIKey apiKey = loadAPIKeys();
 		settingTwitter(apiKey);
+		registerListeners();
+		settingBot();
+		serverStartTweet();
 	}
 
 	@Override
@@ -66,6 +71,37 @@ public class MineTweet extends JavaPlugin
 		if(forceDisableMode)
 		{
 			return;
+		}
+		serverStopTweet();
+	}
+
+	private void serverStartTweet()
+	{
+		if (mtConfig.serverStartTweet)
+		{
+			try
+			{
+				twitterManager.tweet(mtConfig.start_message_temp);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void serverStopTweet()
+	{
+		if (mtConfig.serverStopTweet)
+		{
+			try
+			{
+				twitterManager.tweet(mtConfig.stop_message_temp);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -109,6 +145,18 @@ public class MineTweet extends JavaPlugin
 		{
 			pluginManager.registerEvents(new AchievementAwardedListener(instance), instance);
 			mtLogger.info( "実績取得時ツイートが有効になりました。");
+		}
+
+		if (mtConfig.playerDeathTweet)
+		{
+			pluginManager.registerEvents(new PlayerDeathListener(instance), instance);
+			mtLogger.info( "死亡時ツイートが有効になりました。");
+		}
+
+		if (mtConfig.playerDeathByPlayerTweet)
+		{
+			pluginManager.registerEvents(new KilledByPlayerListener(instance), instance);
+			mtLogger.info( "プレイヤー殺害ツイートが有効になりました。");
 		}
 
 		//MCBANSとのBAN連携
@@ -162,9 +210,9 @@ public class MineTweet extends JavaPlugin
 
 	private void settingBot()
 	{
+		botManager = new BotManager(instance);
 		if(mtConfig.useBot)
 		{
-			botManager = new BotManager(instance);
 			mtLogger.info( "BOT機能を有効にします。");
 			botManager.botSetup();
 		}
@@ -286,7 +334,7 @@ public class MineTweet extends JavaPlugin
 					return true;
 				}
 			}
-			else if(args[0].equalsIgnoreCase("tweet"))
+			else if(args[0].equalsIgnoreCase("tw"))
 			{
 				if(checkPermission(sender, "minetweet.tweet"))
 				{
@@ -294,16 +342,45 @@ public class MineTweet extends JavaPlugin
 					{
 						if(args.length >= 2)
 						{
-							try
+							String source = VariousUtility.joinArray(args, 1);
+							if(sender instanceof Player)
 							{
-								twitterManager.twitter.updateStatus(VariousUtility.joinArray(args, 1));
-								Messenger.messageToSender(sender, Messenger.MessageType.INFO, "ツイートに成功しました。");
+								Player player = (Player)sender;
+								String message = replaceKeywords(mtConfig.cmd_message_temp, player.getName(), source);
+
+								try
+								{
+									twitterManager.twitter.updateStatus(message);
+								}
+								catch (TwitterException e)
+								{
+									e.printStackTrace();
+								}
+								//1.9から
+								Class<?> cl = Sound.class;
+
+								for (Object o: cl.getEnumConstants())
+								{
+									if (o.toString().equals("ENTITY_PLAYER_LEVELUP") || (o.toString().equals("LEVEL_UP")))
+									{
+										player.playSound(player.getLocation(), (Sound)o, 10, 1);
+									}
+								}
 								return true;
 							}
-							catch (TwitterException e)
+							else
 							{
-								e.printStackTrace();
-								Messenger.messageToSender(sender, Messenger.MessageType.SEVERE, "何らかの理由でツイートに失敗しました。");
+								//TODO ここのコンソールを変更可能にする
+								String message = replaceKeywords(mtConfig.cmd_message_temp, "コンソール", source);
+
+								try
+								{
+									twitterManager.twitter.updateStatus(message);
+								}
+								catch (TwitterException e)
+								{
+									e.printStackTrace();
+								}
 								return true;
 							}
 						}
@@ -335,6 +412,7 @@ public class MineTweet extends JavaPlugin
 					{
 						botManager.botSetup();
 					}
+
 					registerListeners();
 					Messenger.messageToSender(sender, Messenger.MessageType.INFO, "Configファイルの再読込を行いました。");
 
@@ -351,11 +429,11 @@ public class MineTweet extends JavaPlugin
 				help(sender);
 				return true;
 			}
-			else if((args[0].equalsIgnoreCase("test")))
-			{
-
-				return true;
-			}
+//			else if((args[0].equalsIgnoreCase("test")))
+//			{
+//
+//				return true;
+//			}
 			else
 			{
 				help(sender);
@@ -408,6 +486,30 @@ public class MineTweet extends JavaPlugin
 	protected static File getPluginJarFile()
 	{
 		return getInstance().getFile();
+	}
+
+	private String replaceKeywords(String source,String name, String message)
+	{
+		String result = source;
+		if (result.contains(KEYWORD_PLAYER))
+		{
+			result = result.replace(KEYWORD_PLAYER, name);
+		}
+		if ( result.contains(KEYWORD_MESSAGE ) )
+		{
+			result = result.replace(KEYWORD_MESSAGE , message);
+		}
+		if (result.contains(KEYWORD_NEWLINE))
+		{
+			result = result.replace(KEYWORD_NEWLINE, SOURCE_NEWLINE);
+		}
+		if (result.contains(KEYWORD_TIME))
+		{
+			String time = VariousUtility.timeGetter(mtConfig.dateformat);
+
+			result = result.replace(KEYWORD_TIME, time);
+		}
+		return result;
 	}
 
 	public static MineTweet getInstance()

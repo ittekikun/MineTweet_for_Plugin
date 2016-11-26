@@ -2,6 +2,7 @@ package com.ittekikun.plugin.minetweet;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -50,6 +51,25 @@ public class BukkitUtility
             // never happen
         }
         return new ArrayList<Player>();
+    }
+
+    /**
+     * 指定したプレイヤーが手に持っているアイテムを返します。
+     * CB1.9以降と、CB1.8.8以前で、互換性を保つために使用します。
+     * @param player プレイヤー
+     * @return 手に持っているアイテム
+     */
+    @SuppressWarnings("deprecation")
+    public static ItemStack getItemInHand(Player player)
+    {
+        if (isCB19orLater())
+        {
+            return player.getInventory().getItemInMainHand();
+        }
+        else
+        {
+            return player.getItemInHand();
+        }
     }
 
     private static Boolean isCB19orLaterCache;

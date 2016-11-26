@@ -30,7 +30,7 @@ public class QuitPlayerListener implements Listener
 		if (!mtConfig.tweetWithImage)
 		{
 			ArrayList players = BukkitUtility.getOnlinePlayers();
-			String number = Integer.toString((players.size()));
+			String number = Integer.toString((players.size() - 1));
 
 			String Message = replaceKeywords(mtConfig.quit_message_temp, event.getPlayer().getName(), number, event.getPlayer().getUniqueId().toString());
 

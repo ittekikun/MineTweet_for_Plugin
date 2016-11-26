@@ -32,6 +32,7 @@ public class TwitterManager
     public TwitterManager(MineTweet mineTweet, APIKey apiKey)
     {
         this.mineTweet = mineTweet;
+        this.mtConfig = mineTweet.mtConfig;
         this.apiKey = apiKey;
         this.logger = MineTweet.mtLogger;
     }

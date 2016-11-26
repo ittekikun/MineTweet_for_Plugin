@@ -28,7 +28,7 @@ public class VersionCheckListener implements Listener
         Player player = event.getPlayer();
         if(player.isOp() || player.hasPermission("minetweet.vcheck"))
         {
-            double nowVer = Double.valueOf(plugin.getServer().getPluginManager().getPlugin("MineTweet").getDescription().getVersion());
+            double nowVer = Double.valueOf(plugin.getDescription().getVersion());
 
             String url = "MineTweet_for_plugin";
 

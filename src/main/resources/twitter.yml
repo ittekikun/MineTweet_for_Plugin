@@ -15,33 +15,29 @@
 #CommandTweetTemplate: ツイートコマンドツイートメッセージをカスタマイズできます。($message→ツイート内容, $time→時間(フォーマットはDateFormatに準拠), $newline→改行)
 #
 #PlayerJoinTweet: プレイヤーがログインした時にツイートするか
-#JoinMessageTemplate: ログインした時にツイートするメッセージをカスタマイズ出来ます。（$user→ID, $time→時間(フォーマットはDateFormatに準拠), $newline→改行）
+#JoinMessageTemplate: ログインした時にツイートするメッセージをカスタマイズ出来ます。（$player→ID, $uuid→$playerのUUID, $time→時間(フォーマットはDateFormatに準拠), $newline→改行）
 #
 #PlayerQuitTweet: プレイヤーがログアウトした時にツイートするか
-#QuitMessageTemplate: ログアウトした時にツイートするメッセージをカスタマイズ出来ます。（$user→ID, $time→時間(フォーマットはDateFormatに準拠), $newline→改行）]
+#QuitMessageTemplate: ログアウトした時にツイートするメッセージをカスタマイズ出来ます。（$player→ID, $uuid→$playerのUUID, $time→時間(フォーマットはDateFormatに準拠), $newline→改行, ）
 #
 #TweetWithImage: ログイン時とログアウト時に画像を添付してツイートするか
 #
 #MCBansKICKTweet: KICKをツイートするか（要MCBANS）
-#KickMessageTemplate: KICKした時にツイートするメッセージをカスタマイズ出来ます。（$user→ID、$reason→理由、$sender→KICKした人, $time→時間(フォーマットはDateFormatに準拠), $newline→改行）
+#KickMessageTemplate: KICKした時にツイートするメッセージをカスタマイズ出来ます。（$player→ID, $uuid→$playerのUUID、$reason→理由、$sender→KICKした人, $time→時間(フォーマットはDateFormatに準拠), $newline→改行）
 #
-#MCBansBANTweet: LBAN&GBANをツイートするか（要MCBANS・0でツイートなし、1でGBAN・LBAN両方、2でGBANのみ、3でLBAのみ）
-#BanMessageTemplate: GBANした時にツイートするメッセージをカスタマイズ出来ます。（$user→ID、$reason→理由、$sender→BANした人,$bantype→BANのタイプ, $time→時間(フォーマットはDateFormatに準拠), $newline→改行）
-#
-#LunaChatTweet: チャットチャンネル作成&削除をツイートするか(要LunaChat)
-#ChannelCreateTemplate: 作成した時にツイートするメッセージをカスタマイズ出来ます。（$channel→チャンネル名, $time→時間(フォーマットはDateFormatに準拠), $newline→改行）
-#ChannelDeleteTemplate: 削除した時にツイートするメッセージをカスタマイズ出来ます。（$channel→チャンネル名, $time→時間(フォーマットはDateFormatに準拠), $newline→改行）
+#MCBansBANTweet: LBAN&GBANをツイートするか（要MCBANS・0でツイートなし、1でGBAN・LBAN両方、2でGBANのみ、3でLBANのみ）
+#BanMessageTemplate: GBANした時にツイートするメッセージをカスタマイズ出来ます。（$player→ID, $uuid→$playerのUUID、$reason→理由、$sender→BANした人,$bantype→BANのタイプ, $time→時間(フォーマットはDateFormatに準拠), $newline→改行）
 #
 #AchievementAwardedTweet: プレイヤーが実績を取得した時にツイートするか
-#AchievementAwardedTemplate: 取得した時のメッセージをカスタマイズできます。（$user→ID, $time→時間(フォーマットはDateFormatに準拠), $newline→改行）
+#AchievementAwardedTemplate: 取得した時のメッセージをカスタマイズできます。（$player→ID, $time→時間(フォーマットはDateFormatに準拠), $newline→改行）
 #
-#VotifierReceiveTweetTweet: 投票サイト(Japan Minecraft Servers等)で何者かが投票した時にツイートするか
-#VotifierReceiveTemplate: 投票された時にツイートするメッセージをカスタマイズできます。（$user→ID、$service→サービス名, $time→時間(フォーマットはDateFormatに準拠), $newline→改行）
+#VotifierReceiveTweetTweet: 投票サイト(Japan Minecraft Servers等)で何者かが投票した時にツイートするか※ここで言う$playerは各投票サイトで登録されている名前であり、MinecraftIDと必ずしも同一とは限りません。
+#VotifierReceiveTemplate: 投票された時にツイートするメッセージをカスタマイズできます。（$player→ID、$service→サービス名, $time→時間(フォーマットはDateFormatに準拠), $newline→改行）
 #
 #PlayerDeathTweet: プレイヤーが死んだ場合にツイートします。現在メッセージのカスタマイズ機能はありません。
 #
 #PlayerDeathByPlayerTweet: プレイヤーがプレイヤーによってキルされた場合にツイートします。
-#PlayerDeathByPlayerTemplate: キルされた場合のメッセージをカスタマイズできます。($deader→死んだ人、$killer→キルした人、キルした際の武器$item)
+#PlayerDeathByPlayerTemplate: キルされた場合のメッセージをカスタマイズできます。($deader→死んだ人、$killer→キルした人、キルした際の武器$item, $time→時間(フォーマットはDateFormatに準拠), $newline→改行)
 
 AddDate: true
 DateFormat: EEE MMM d HH:mm:ss z
@@ -52,31 +48,29 @@ ServerStopTweet: false
 ServerStartTemplate: サーバーを起動しました。【自動投稿】
 ServerStopTemplate: サーバーが停止しました。【自動投稿】
 
-CommandTweetTemplate: (サーバーから$userが投稿) $message
+CommandTweetTemplate: (サーバーから$playerが投稿) $message
 
 PlayerJoinTweet: true
-JoinMessageTemplate: $userさんがサーバーにログインしました。現在$number人がログインしています。【自動投稿】
+JoinMessageTemplate: $playerさんがサーバーにログインしました。現在$number人がログインしています。【自動投稿】
 
 PlayerQuitTweet: true
-QuitMessageTemplate: $userさんがサーバーからログアウトしました。現在$number人がログインしています。【自動投稿】
+QuitMessageTemplate: $playerさんがサーバーからログアウトしました。現在$number人がログインしています。【自動投稿】
 
 TweetWithImage: false
 
 MCBansKICKTweet: false
-KickMessageTemplate: $userが、「$reason」という理由で、$senderによってKICKされました。【自動投稿】
+KickMessageTemplate: $playerが、「$reason」という理由で、$senderによってKICKされました。【自動投稿】
 
 MCBansBANTweet: 0
-BanMessageTemplate: $userが、「$reason」という理由で、$senderによって$bantypeBANされました。【自動投稿】
-
-LunaChatTweet: false
-ChannelCreateTemplate: チャットチャンネル「$channel」が作成されました。【自動投稿】
-ChannelDeleteTemplate: チャットチャンネル「$channel」が削除されました。【自動投稿】
+BanMessageTemplate: $playerが、「$reason」という理由で、$senderによって$bantypeBANされました。【自動投稿】
+GlobalBAN: グローバルBAN
+LocalBAN: ローカルBAN
 
 AchievementAwardedTweet: false
-AchievementAwardedTemplate: $userが、「$achievement」という実績を取得しました。【自動投稿】
+AchievementAwardedTemplate: $playerが、「$achievement」という実績を取得しました。【自動投稿】
 
 VotifierReceiveTweet: false
-VotifierReceiveTemplate: $userさんが、「$service」で当鯖に投票しました。【自動投稿】
+VotifierReceiveTemplate: $playerさんが、「$service」で当鯖に投票しました。【自動投稿】
 
 PlayerDeathTweet: false
 
