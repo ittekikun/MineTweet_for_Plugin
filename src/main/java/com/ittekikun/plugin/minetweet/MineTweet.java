@@ -156,7 +156,7 @@ public class MineTweet extends JavaPlugin
 		if (mtConfig.playerDeathByPlayerTweet)
 		{
 			pluginManager.registerEvents(new KilledByPlayerListener(instance), instance);
-			mtLogger.info( "プレイヤー殺害ツイートが有効になりました。");
+			mtLogger.info( "プレイヤーキルツイートが有効になりました。");
 		}
 
 		//MCBANSとのBAN連携
