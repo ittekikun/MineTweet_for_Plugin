@@ -30,7 +30,7 @@ public class VersionCheckListener implements Listener
         {
             double nowVer = Double.valueOf(plugin.getDescription().getVersion());
 
-            String url = "MineTweet_for_plugin";
+            String url = "MineTweet_for_Plugin";
 
             Thread updateCheck = new Thread(new UpdateCheck(player ,url ,nowVer));
             updateCheck.start();

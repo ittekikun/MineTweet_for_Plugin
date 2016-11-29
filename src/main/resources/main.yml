@@ -9,7 +9,7 @@
 #accessToken:
 #accessTokenSecret:
 #
-#VersionCheck: ログイン時にバージョンチェックをするか(OPとMineTweet.infoの権限を持ってる人にだけ表示されます)
+#VersionCheck: ログイン時にバージョンチェックをするか(OPとMineTweet.vcheckの権限を持ってる人にだけ表示されます)
 
 UseMyConsumerKey: false
 consumerKey: xxxxxxxxxx
