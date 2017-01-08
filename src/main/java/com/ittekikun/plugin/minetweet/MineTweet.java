@@ -334,7 +334,7 @@ public class MineTweet extends JavaPlugin
 					return true;
 				}
 			}
-			else if(args[0].equalsIgnoreCase("tw"))
+			else if(args[0].equalsIgnoreCase("tw") || args[0].equalsIgnoreCase("tweet"))
 			{
 				if(checkPermission(sender, "minetweet.tweet"))
 				{
